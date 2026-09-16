@@ -174,14 +174,15 @@ function Menu() {
   const { language, t } = useLanguage();
   const [active, setActive] = useState("all");
   const [query, setQuery] = useState("");
+  const menuData = MENU_DATA;
 
-  const total = MENU_DATA.reduce((n, c) => n + c.items.length, 0);
+  const total = menuData.reduce((n, c) => n + c.items.length, 0);
   const visibleCategories = useMemo(() => {
-    const cats = active === "all" ? MENU_DATA : MENU_DATA.filter(c => c.id === active);
+    const cats = active === "all" ? menuData : menuData.filter(c => c.id === active);
     if (!query.trim()) return cats;
     const q = query.toLowerCase();
     return cats.map(cat => ({ ...cat, items: cat.items.filter(i => `${i.name} ${i.description}`.toLowerCase().includes(q)) })).filter(c => c.items.length);
-  }, [active, query]);
+  }, [active, query, menuData]);
 
   const count = visibleCategories.reduce((n, c) => n + c.items.length, 0);
 
@@ -195,7 +196,7 @@ function Menu() {
         <div className="menu-controls">
           <div className="menu-toolbar">
             <button className={`cat-pill ${active === "all" ? "is-active" : ""}`} onClick={() => setActive("all")}>✨ {t("all")} ({total})</button>
-            {MENU_DATA.map(cat => <button key={cat.id} className={`cat-pill ${active === cat.id ? "is-active" : ""}`} onClick={() => setActive(cat.id)}><span>{cat.icon}</span>{CATEGORY_NAMES[language][cat.id]} ({cat.items.length})</button>)}
+            {menuData.map(cat => <button key={cat.id} className={`cat-pill ${active === cat.id ? "is-active" : ""}`} onClick={() => setActive(cat.id)}><span>{cat.icon}</span>{CATEGORY_NAMES[language][cat.id] || cat.name} ({cat.items.length})</button>)}
           </div>
           <label className="menu-search">
             <Icon size={18}><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></Icon>
@@ -208,7 +209,7 @@ function Menu() {
           {visibleCategories.map(cat => (
             <div className="menu-fadeout" key={cat.id}>
               <h3 className="menu-group-title"><span>{cat.icon}</span>{CATEGORY_NAMES[language][cat.id]}<span className="rule" /></h3>
-              <div className="menu-grid">{cat.items.map((item, i) => <DishCard key={item.name} item={item} cat={cat} index={i} />)}</div>
+              <div className="menu-grid">{cat.items.map((item, i) => <DishCard key={`${cat.id}-${item.name}`} item={item} cat={cat} index={i} />)}</div>
             </div>
           ))}
         </div>
