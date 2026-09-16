@@ -10,6 +10,8 @@ const entryHtml = (scriptSrc, stylesheetHref = "") => `<!doctype html>
     <meta name="description" content="Coin Rose — restaurant à Kénitra. Cuisine marocaine et française, produits de saison et réservation de table." />
     <meta property="og:title" content="Coin Rose — Restaurant | Goût et Passion" />
     <meta property="og:description" content="Cuisine marocaine et française à Kénitra." />
+    <link rel="icon" type="image/webp" href="/coin-rose-logo.webp" />
+    <link rel="apple-touch-icon" href="/coin-rose-logo.webp" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet" />
